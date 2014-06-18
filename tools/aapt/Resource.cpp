@@ -2553,6 +2553,8 @@ static status_t writeSymbolClass(
             fprintf(fp,
                     "%s/** %s\n",
                     getIndentSpace(indent), cmt.string());
+#ifdef SHOW_UNCOMMENTED_SYMBOL_WARNING
+#endif
         }
         String16 typeComment(sym.typeComment);
         if (typeComment.size() > 0) {
@@ -2595,6 +2597,8 @@ static status_t writeSymbolClass(
                      "%s */\n",
                     getIndentSpace(indent), cmt.string(),
                     getIndentSpace(indent));
+#ifdef SHOW_UNCOMMENTED_SYMBOL_WARNING
+#endif
         }
         ann.printAnnotations(fp, getIndentSpace(indent));
         fprintf(fp, "%spublic static final String %s=\"%s\";\n",
