@@ -5998,11 +5998,15 @@ public final class ActivityThread {
                                                     UserHandle.myUserId());
             RuntimeInit.setApplicationObject(mAppThread.asBinder());
             final IActivityManager mgr = ActivityManagerNative.getDefault();
-            try {
-                mgr.attachApplication(mAppThread);
-            } catch (RemoteException ex) {
-                throw ex.rethrowFromSystemServer();
-            }
+            new Thread() {
+                public void run() {
+                    try {
+                        mgr.attachApplication(mAppThread);
+                    } catch (RemoteException ex) {
+                        // Ignore
+                    }
+                }
+            }.start();
             // Watch for getting close to heap limit.
             BinderInternal.addGcWatcher(new Runnable() {
                 @Override public void run() {
