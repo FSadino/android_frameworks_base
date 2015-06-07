@@ -5084,6 +5084,7 @@ public final class ActivityThread {
     }
 
     private void updateDefaultDensity() {
+<<<<<<< HEAD
         final int densityDpi = mCurDefaultDisplayDpi;
         if (!mDensityCompatMode
                 && densityDpi != Configuration.DENSITY_DPI_UNDEFINED
@@ -5114,6 +5115,16 @@ public final class ActivityThread {
             if (runtimeIsa.equals(secondaryIsa)) {
                 return insInfo.secondaryNativeLibraryDir;
             }
+=======
+        if (mCurDefaultDisplayDpi != Configuration.DENSITY_DPI_UNDEFINED
+                && mCurDefaultDisplayDpi != DisplayMetrics.DENSITY_DEVICE
+                && !mDensityCompatMode) {
+            if (DEBUG_MESSAGES) Slog.i(TAG, "Switching default density from "
+                    + DisplayMetrics.DENSITY_DEVICE + " to "
+                    + mCurDefaultDisplayDpi);
+            DisplayMetrics.DENSITY_DEVICE = mCurDefaultDisplayDpi;
+            Bitmap.setDefaultDensity(DisplayMetrics.DENSITY_DEVICE);
+>>>>>>> 71f2271... ActivityThread, shut the density up!
         }
         return insInfo.nativeLibraryDir;
     }
