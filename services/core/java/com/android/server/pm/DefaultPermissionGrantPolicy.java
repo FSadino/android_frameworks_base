@@ -611,41 +611,41 @@ final class DefaultPermissionGrantPolicy {
                 PackageParser.Package wearHomePackage = getDefaultSystemHandlerActivityPackageLPr(
                         homeIntent, userId);
 
-                if (wearHomePackage != null
-                        && doesPackageSupportRuntimePermissions(wearHomePackage)) {
-                    grantRuntimePermissionsLPw(wearHomePackage, CONTACTS_PERMISSIONS, false,
-                            userId);
-                    grantRuntimePermissionsLPw(wearHomePackage, PHONE_PERMISSIONS, true, userId);
-                    grantRuntimePermissionsLPw(wearHomePackage, MICROPHONE_PERMISSIONS, false,
-                            userId);
-                    grantRuntimePermissionsLPw(wearHomePackage, LOCATION_PERMISSIONS, false,
-                            userId);
-                }
+            // Google Account
+            PackageParser.Package googleaccountPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.gsf.login", userId);
+            if (googleaccountPackage != null) {
+                grantRuntimePermissionsLPw(googleaccountPackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleaccountPackage, PHONE_PERMISSIONS, userId);
             }
 
-            // Print Spooler
-            PackageParser.Package printSpoolerPackage = getSystemPackageLPr(
-                    PrintManager.PRINT_SPOOLER_PACKAGE_NAME);
-            if (printSpoolerPackage != null
-                    && doesPackageSupportRuntimePermissions(printSpoolerPackage)) {
-                grantRuntimePermissionsLPw(printSpoolerPackage, LOCATION_PERMISSIONS, true, userId);
+            // Google App
+            PackageParser.Package googleappPackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.googlequicksearchbox", userId);
+            if (googleappPackage != null) {
+                grantRuntimePermissionsLPw(googleappPackage, CALENDAR_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleappPackage, CAMERA_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleappPackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleappPackage, LOCATION_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleappPackage, MICROPHONE_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleappPackage, PHONE_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleappPackage, SMS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(googleappPackage, STORAGE_PERMISSIONS, userId);
             }
 
-            // EmergencyInfo
-            Intent emergencyInfoIntent = new Intent(TelephonyManager.ACTION_EMERGENCY_ASSISTANCE);
-            PackageParser.Package emergencyInfoPckg = getDefaultSystemHandlerActivityPackageLPr(
-                    emergencyInfoIntent, userId);
-            if (emergencyInfoPckg != null
-                    && doesPackageSupportRuntimePermissions(emergencyInfoPckg)) {
-                grantRuntimePermissionsLPw(emergencyInfoPckg, CONTACTS_PERMISSIONS, true, userId);
-                grantRuntimePermissionsLPw(emergencyInfoPckg, PHONE_PERMISSIONS, true, userId);
-            }
-
-            // NFC Tag viewer
-            Intent nfcTagIntent = new Intent(Intent.ACTION_VIEW);
-            nfcTagIntent.setType("vnd.android.cursor.item/ndef_msg");
-            PackageParser.Package nfcTagPkg = getDefaultSystemHandlerActivityPackageLPr(
-                    nfcTagIntent, userId);
+            // Google Play Services
+            PackageParser.Package gmscorePackage = getDefaultProviderAuthorityPackageLPr(
+                    "com.google.android.gms", userId);
+            if (gmscorePackage != null) {
+                grantRuntimePermissionsLPw(gmscorePackage, SENSORS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, CALENDAR_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, CAMERA_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, CONTACTS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, LOCATION_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, MICROPHONE_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, PHONE_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, SMS_PERMISSIONS, userId);
+                grantRuntimePermissionsLPw(gmscorePackage, STORAGE_PERMISSIONS, userId);
             if (nfcTagPkg != null
                     && doesPackageSupportRuntimePermissions(nfcTagPkg)) {
                 grantRuntimePermissionsLPw(nfcTagPkg, CONTACTS_PERMISSIONS, false, userId);
@@ -683,7 +683,9 @@ final class DefaultPermissionGrantPolicy {
         if (doesPackageSupportRuntimePermissions(smsPackage)) {
             grantRuntimePermissionsLPw(smsPackage, PHONE_PERMISSIONS, userId);
             grantRuntimePermissionsLPw(smsPackage, CONTACTS_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(smsPackage, PHONE_PERMISSIONS, userId);
             grantRuntimePermissionsLPw(smsPackage, SMS_PERMISSIONS, userId);
+            grantRuntimePermissionsLPw(smsPackage, STORAGE_PERMISSIONS, true, userId);
         }
     }
 
