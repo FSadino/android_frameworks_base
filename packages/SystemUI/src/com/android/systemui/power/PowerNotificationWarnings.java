@@ -160,7 +160,6 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                 .setContentTitle(mContext.getString(R.string.battery_low_title))
                 .setContentText(mContext.getString(textRes, percentage))
                 .setOnlyAlertOnce(true)
-                .setDeleteIntent(pendingBroadcast(ACTION_DISMISSED_WARNING))
                 .setPriority(Notification.PRIORITY_MAX)
                 .setVisibility(Notification.VISIBILITY_PUBLIC)
                 .setColor(mContext.getColor(
@@ -171,12 +170,25 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
         nb.addAction(0,
                 mContext.getString(R.string.battery_saver_start_action),
                 pendingBroadcast(ACTION_START_SAVER));
+            addDismissAction(nb);
         if (mPlaySound) {
             attachLowBatterySound(nb);
             mPlaySound = false;
         }
         SystemUI.overrideNotificationAppName(mContext, nb);
+        addDismissAction(nb);
         mNoMan.notifyAsUser(TAG_NOTIFICATION, R.id.notification_power, nb.build(), UserHandle.ALL);
+    }
+
+        nb.addAction(R.drawable.battery_saver_turn_off,
+                mContext.getString(R.string.battery_saver_notification_action_text_short),
+                pendingBroadcast(ACTION_STOP_SAVER));
+    }
+
+    private void addDismissAction(Notification.Builder nb) {
+        nb.addAction(R.drawable.battery_saver_dismiss,
+                mContext.getString(R.string.battery_saver_dismiss_title),
+                pendingBroadcast(ACTION_DISMISSED_WARNING));
     }
 
     private PendingIntent pendingActivity(Intent intent) {
@@ -330,7 +342,7 @@ public class PowerNotificationWarnings implements PowerUI.WarningsUI {
                 dismissLowBatteryNotification();
                 showStartSaverConfirmation();
             } else if (action.equals(ACTION_DISMISSED_WARNING)) {
-                dismissLowBatteryWarning();
+                dismissSaverNotification();
             }
         }
     }
