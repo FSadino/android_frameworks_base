@@ -88,6 +88,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     private final DataSaverController mDataSaver;
     private StatusBarKeyguardViewManager mStatusBarKeyguardViewManager;
     private final SuController mSuController;
+    private boolean mSuIndicatorVisible;
 
     // Assume it's all good unless we hear otherwise.  We don't always seem
     // to get broadcasts that it *is* there.
@@ -173,6 +174,13 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
         // Alarm clock
         mIconController.setIcon(mSlotAlarmClock, R.drawable.stat_sys_alarm, null);
         mIconController.setIconVisibility(mSlotAlarmClock, false);
+        mSettingsObserver.onChange(true);
+        mContext.getContentResolver().registerContentObserver(
+                CMSettings.System.getUriFor(CMSettings.System.SHOW_ALARM_ICON),
+                false, mSettingsObserver);
+        mContext.getContentResolver().registerContentObserver(
+                Settings.System.getUriFor(Settings.System.SHOW_SU_INDICATOR),
+                false, mSettingsObserver);
 
         // zen
         mIconController.setIcon(mSlotZen, R.drawable.stat_sys_zen_important, null);
@@ -204,11 +212,14 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
                 mContext.getString(R.string.accessibility_managed_profile));
         mIconController.setIconVisibility(mSlotManagedProfile, mManagedProfileIconVisible);
 
-        // data saver
+    private ContentObserver mSettingsObserver = new ContentObserver(null) {
         mIconController.setIcon(mSlotDataSaver, R.drawable.stat_sys_data_saver,
                 context.getString(R.string.accessibility_data_saver_on));
         mIconController.setIconVisibility(mSlotDataSaver, false);
         mDataSaver.addListener(this);
+            mSuIndicatorVisible = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.SHOW_SU_INDICATOR, 1) == 1;
+            updateSu();
     }
 
     public void setStatusBarKeyguardViewManager(
@@ -528,7 +539,7 @@ public class PhoneStatusBarPolicy implements Callback, RotationLockController.Ro
     };
 
     private void updateSu() {
-        mIconController.setIconVisibility(mSlotSu, mSuController.hasActiveSessions());
+        mService.setIconVisibility(SLOT_SU, mSuController.hasActiveSessions() && mSuIndicatorVisible);
     }
 
     private final CastController.Callback mCastCallback = new CastController.Callback() {
