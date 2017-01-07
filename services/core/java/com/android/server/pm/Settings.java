@@ -1613,10 +1613,7 @@ final class Settings {
                                 null, null, null,
                                 false, // blockUninstall
                                 INTENT_FILTER_DOMAIN_VERIFICATION_STATUS_UNDEFINED, 0, null);
-                                null,
-                                null
-                                );
-                    }
+                            }
                     return;
                 }
                 str = new FileInputStream(userPackagesStateFile);
