@@ -16524,7 +16524,6 @@ public class PackageManagerService extends IPackageManager.Stub {
                     false /*hidden*/, false /*suspended*/, null, null, null,
                     false /*blockUninstall*/,
                     ps.readUserState(nextUserId).domainVerificationStatus, 0, null);
-                    null, null);
         }
     }
 
