@@ -395,9 +395,7 @@ abstract class PackageSettingBase extends SettingBase {
         state.blockUninstall = blockUninstall;
         state.domainVerificationStatus = domainVerifState;
         state.appLinkGeneration = linkGeneration;
-        state.protectedComponents = protectedComponents;
         state.resourceDirs = resourceDirs;
-        state.visibleComponents = visibleComponents;
     }
 
     ArraySet<String> getEnabledComponents(int userId) {
