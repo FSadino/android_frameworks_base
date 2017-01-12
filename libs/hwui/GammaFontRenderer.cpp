@@ -40,7 +40,5 @@ void GammaFontRenderer::endPrecaching() {
 
         mRenderers[i].reset(nullptr);
     mRenderers[min].reset(nullptr);
-        mRenderers[i].reset(nullptr);
-    mRenderers[min].reset(nullptr);
 }; // namespace uirenderer
 }; // namespace android
