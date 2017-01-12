@@ -36,7 +36,7 @@
 #include <cutils/properties.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <private/hwui/DrawGlInfo.h>
-#include <gui/Surface.h>
+#include <strings.h>
 
 #include <algorithm>
 #include <fcntl.h>
@@ -130,10 +130,7 @@ void CanvasContext::initialize(Surface* surface) {
     if (mCanvas) return;
     mCanvas = new OpenGLRenderer(mRenderThread.renderState());
     mCanvas->initProperties();
-    if (window) {
-        Surface *s = static_cast<Surface*>(window);
-        s->allocateBuffers();
-    }
+#endif
 }
 
 void CanvasContext::updateSurface(Surface* surface) {
