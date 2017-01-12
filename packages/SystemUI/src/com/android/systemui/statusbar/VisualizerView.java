@@ -174,7 +174,7 @@ public class VisualizerView extends View
     private void updateViewVisibility() {
         final int curVis = getVisibility();
         final int newVis = mStatusBarState != StatusBarState.SHADE
-        checkStateChanged();
+                && mVisualizerEnabled ? View.VISIBLE : View.GONE;
         if (curVis != newVis) {
             setVisibility(newVis);
             checkStateChanged();
