@@ -2211,6 +2211,10 @@ message MetricsEvent {
     //   SUBTYPE: sub settings classname
     ACTION_SETTING_HELP_AND_FEEDBACK = 496;
 
+    // For everything FSadino
+    LOCKSCREEN_WEATHER_SETTINGS = 998;
+    FSADINO = 999;
+
     // ---- End N-MR1 Constants, all N-MR1 constants go above this line ----
 
     // Add new aosp constants above this line.
